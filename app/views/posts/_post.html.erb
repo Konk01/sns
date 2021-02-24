@@ -1,0 +1,65 @@
+<div class="card"> 
+	<div class="card-content"> 
+	<span class="card-title">
+		<% if post.user.Avatar %>
+		<img class="circle thumbnail" src="<%= post.user.Avatar.thumb.url %>">
+		<% end %> <span class="name"><%= post.user.name %></span>
+	<font size="3", class="right"><%= post.created_at.to_s(:datetime_jp) %></font></span>
+	<% if user_signed_in? && current_user != post.user %>
+	  <% if current_user.following_user.include?(post.user) %>
+		<%= form_tag relationships_path(post.user.id, post.user.id), method: :delete, class: "right" do %>
+			<button class="btn">フォロー外す</button>
+		<% end %>
+	  <% else %>
+		<%= form_tag relationships_path(post.user.id), method: :post, class: "right" do %>
+			<input type="hidden" name="followed_id" value="<%= post.user.id %>">
+			<button class="btn">フォローする</button>
+		<% end %>
+	  <% end %>
+	<% end %>
+	<div class="card-image">
+		<% if post.imige.url %>
+			<img src="<%= post.imige.url %>">
+		<% end %>
+		</div>
+	<p class="pre-line"><%= post.content %></p> 
+	</div> <div class="card-action"> 
+	<%= post.likes.size %> 人の
+	<% if current_user.is_like?(post) %>
+		<%= link_to "いいね！", post_like_path(post), method: "post", class: 'css_class', style: 'color:#ff4081' %>
+	<% else %>
+		<%= link_to "いいね！", post_like_path(post), method: "post", class: 'css_class', style: 'color:#ff4081' %>
+	<% end %>
+	<% if current_user.id == post.user_id %>
+	<%= link_to "削除", post_path(post), class: "right", method: "delete" %>
+	<%= link_to "編集", edit_post_path(post), class: "right", method: "get" %>
+	<% end %>
+
+	<%= form_tag post_comments_path(post) do %> 
+	<div class="input-field"> 
+		<%= text_area_tag :content, nil, class: "materialize-textarea", placeholder: "コメントを書いてください。", required: true %> 
+	</div> <div class="input-field"> 
+	<%= button_tag "作成", class: "btn" %> 
+	</div> 
+	<% end %>
+	
+	<% if post.comments.present? %> 
+	<ul class="collection"> 
+		<% post.comments.each do |comment| %> 
+		<li class="collection-item"> 
+			<span class="title"><%= comment.user.name %></span> 
+			<span class=""><%= comment.created_at.to_s(:datetime_jp) %></span> 
+			<p class="pre-line"><%= comment.content %></p> 
+			<% if comment.user.id == current_user.id %> 
+
+				<a><%= link_to "削除", post_comment_path(post, comment), method: "delete", class: "right" %></a>
+				<a><%= link_to "編集", edit_post_comment_path(post, comment), method: "get", class: "right" %></a>
+
+			<% end %> 
+		</li> 
+		<% end %> 
+	</ul> 
+	
+	<% end %>
+	</div> 
+</div> 

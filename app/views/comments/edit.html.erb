@@ -1,0 +1,15 @@
+<div class="container"> 
+	<div class="row"> 
+		<div class="card col s12"> 
+			<div class="card-content"> 
+				<div class="card-title">コメントを編集する</div> 
+				<%= form_tag post_comment_path(@comment), method: "patch" do %> <div class="input-field">
+				<input type="hidden" name="id" value="<%=@comment.id%>">
+				<%= text_area_tag :content, @comment.content, class: "materialize-textarea", placeholder: "コメントをかいください。" %> 
+				</div> 
+				<div class="input-field"> <%= button_tag "編集", class: "btn" %> 
+				</div> <% end %> 
+			</div> 
+		</div> 
+	</div> 
+</div>

@@ -4,12 +4,48 @@
     <title>GoormRailsApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+</head>
 
   <body>
+	  <nav>
+		<div class="nav-wrapper">
+		  <a href="/" class="brand-logo">SNS</a>
+		  <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		  <ul class="right hide-on-med-and-down">
+			<li><a href="/posts">ポスト</a></li>
+			<% if user_signed_in? %>
+			  	<li><a><%= current_user.name %></a></li>
+			  	<li><a href="/users/edit">アカウント修正</a></li>
+			  	<li><%= link_to 'ログアウト', destroy_user_session_path, method: 'delete' %></li>
+			<% else %>
+				<li><a href="/users/sign_in">ログイン</a></li>
+				<li><a href="/users/sign_up">アカウント作成</a></li>
+			<% end %>
+		  </ul>
+		</div>
+	  </nav>
+	  <ul class="sidenav" id="mobile-demo">
+			<li><a href="/posts">ポスト</a></li>
+			<% if user_signed_in? %>
+			  	<li><a><%= current_user.name %></a></li>
+			  	<li><a href="/users/edit">アカウント修正</a></li>
+			  	<li><%= link_to 'ログアウト', destroy_user_session_path, method: 'delete' %></li>
+			<% else %>
+				<li><a href="/users/sign_in">ログイン</a></li>
+				<li><a href="/users/sign_up">アカウント作成</a></li>
+			<% end %>
+	  </ul>
     <%= yield %>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  	<script>
+		  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, {});
+  });
+  	</script>
   </body>
 </html>
