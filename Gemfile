@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-
+# git test
 gem 'carrierwave'
 gem 'mini_magick'
 ruby '2.6.5'
