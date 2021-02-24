@@ -47,7 +47,11 @@
 	<ul class="collection"> 
 		<% post.comments.each do |comment| %> 
 		<li class="collection-item"> 
-			<span class="title"><%= comment.user.name %></span> 
+			<span class="title">
+				<% if comment.user.Avatar %>
+				<img class="circle thumbnail" src="<%= comment.user.Avatar.thumb.url %>">
+				<% end %>
+				<%= comment.user.name %></span> 
 			<span class=""><%= comment.created_at.to_s(:datetime_jp) %></span> 
 			<p class="pre-line"><%= comment.content %></p> 
 			<% if comment.user.id == current_user.id %> 
