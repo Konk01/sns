@@ -10,9 +10,10 @@
 				<p>ポスト数 : <%= @posts_count %></p> 
 				<p>フォロワー数 : <%= current_user.follower_user.length %></p> 
 				<p>フォロー数 : <%= current_user.following_user.length %></p>
+				</br>
 				<%= link_to new_post_path do %> 
 				<button class="btn">ポストを作成する</button> 
-				<% end %> 
+				<% end %>
 				</div> 
 			</div> 
 		</div> 
